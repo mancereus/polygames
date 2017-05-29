@@ -1,5 +1,6 @@
 {
   "name": "polygames",
+  "version": "0.3",
   "license": "",
   "devDependencies": {
     "eslint": "^3.19.0",
@@ -10,6 +11,7 @@
     "lint": "npm run lint:javascript",
     "lint:javascript": "eslint . --ext js,html --ignore-path .gitignore",
     "test": "polymer test",
+    "start": "polymer serve",
     "test:integration": "polymer build # test that psk builds without error with the CLI"
   }
 }

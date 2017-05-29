@@ -8,97 +8,35 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
-<link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../bower_components/the-grid/the-grid.html">
-<link rel="import" href="../bower_components/game-card/game-card.html">
-<link rel="import" href="shared-styles.html">
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-<dom-module id="grid-cards">
-  <template>
-    <style>
-      the-grid>div {
-        background: #ff4d43;
-        opacity: 0.9;
-        color: white;
-        cursor: move;
-        overflow: hidden;
-      }
+    <title>grid-board</title>
 
-      the-grid>div[placeholder] {
-        background: #afafaf;
-      }
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../bower_components/web-component-tester/browser.js"></script>
 
-      the-grid [resize] {
-        position: absolute;
-      }
+    <!-- Import the element to test -->
+    <link rel="import" href="../src/grid-board.html">
+  </head>
+  <body>
+    <test-fixture id="BasicView">
+      <template>
+        <grid-board></grid-board>
+      </template>
+    </test-fixture>
 
-      the-grid [resize="bottom-right"] {
-        bottom: 0;
-        right: 0;
-        cursor: nwse-resize;
-      }
-
-      the-grid [resize="bottom-left"] {
-        bottom: 0;
-        left: 0;
-        cursor: nesw-resize;
-      }
-
-      the-grid [resize="top-right"] {
-        top: 0;
-        right: 0;
-        cursor: nesw-resize;
-      }
-
-      the-grid [resize="top-left"] {
-        top: 0;
-        left: 0;
-        cursor: nwse-resize;
-      }
-
-      the-grid [resize="left"] {
-        top: 50%;
-        left: 0;
-        cursor: ew-resize;
-        margin-top: -10px;
-      }
-
-      the-grid [resize="top"] {
-        top: 0%;
-        width: 100%;
-        text-align: center;
-        cursor: ns-resize;
-      }
-
-      the-grid [resize="right"] {
-        top: 50%;
-        right: 0;
-        cursor: ew-resize;
-        margin-top: -10px;
-      }
-
-      the-grid [resize="bottom"] {
-        bottom: 0;
-        width: 100%;
-        text-align: center;
-        cursor: ns-resize;
-      }
-    </style>
-
-    <the-grid draggable resizable animated col-count="7" row-count="7" cell-margin="5" cell-height="300" cell-width="200">
-        <game-card symbol="♠" rank="a" flippable col="0" row="0"></game-card>
-        <game-card symbol="♠" rank="k" flippable col="3" row="0"></game-card>
-        <game-card symbol="X" rank="a" flippable col="6" row="0"></game-card>
-        <game-card symbol="♠" rank="a" flippable col="0" row="2"></game-card>
-      <div placeholder></div>
-    </the-grid>
-  </template>
-
-  <script>
-    class GridCards extends Polymer.Element {
-      static get is() { return 'grid-cards'; }
-    }
-
-    window.customElements.define(GridCards.is, GridCards);
-  </script>
-</dom-module>
+    <script>
+      suite('grid-board tests', function() {
+        test('Number in circle should be 1', function() {
+          var myView = fixture('BasicView');
+          var circle = myView.shadowRoot.querySelector('.circle');
+          assert.equal(circle.textContent, '1');
+        });
+      });
+    </script>
+  </body>
+</html>

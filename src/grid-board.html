@@ -1,0 +1,69 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/the-grid/the-grid.html">
+<link rel="import" href="../bower_components/game-card/game-card.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="grid-board">
+  <template>
+    <style>
+      the-grid>div {
+        background: #ff4d43;
+        opacity: 0.9;
+        color: white;
+        cursor: move;
+        overflow: hidden;
+      }
+
+      the-grid>div[placeholder] {
+        background: #afafaf;
+      }
+
+      the-grid [resize] {
+        position: absolute;
+      }
+
+    </style>
+
+    <the-grid draggable resizable animated col-count="7" row-count="7" cell-margin="5" cell-height="300" cell-width="200">
+      <template is="dom-repeat" items='[[cards]]'>
+          <game-card symbol="[[item.symbol]]" rank="[[item.value]]" flippable  col="{{item.col}}" row="{{item.row}}"></game-card>
+        </div>
+      </template>
+      <game-card symbol="♠" rank="k" flippable col="3" row="0"></game-card>
+      <game-card symbol="X" rank="a" flippable col="6" row="0"></game-card>
+      <game-card symbol="♠" rank="a" flippable col="0" row="2"></game-card>
+      <div placeholder></div>
+    </the-grid>
+  </template>
+
+  <script>
+    class GridBoard extends Polymer.Element {
+      static get is() { return 'grid-board'; }
+      static get properties() {
+        return {
+          cards: {
+            type: Array,
+            value: () => {
+              return [
+                { symbol: "X", value: "3", row: "3", col: "3" },
+                { symbol: "X", value: "2", row: "2", col: "2" }
+              ]
+            }
+          }
+        }
+      }
+    }
+
+    window.customElements.define(GridBoard.is, GridBoard);
+  </script>
+</dom-module>
