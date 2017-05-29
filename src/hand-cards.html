@@ -1,0 +1,52 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/game-card/game-card.html">
+<link rel="import" href="../bower_components/sortable-list/sortable-list.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="hand-cards">
+  <template>
+    <style include="shared-styles">
+       :host {
+        display: block;
+        margin-left: 150px;
+        padding: 10px;
+      }
+      game-card {
+        margin-left: -150px;
+        margin-top: 30px;
+        transform: rotate(30deg);
+      }
+      game-card:hover {
+        position: relative;
+        z-index: 10;
+        margin-top: 10px;
+      }
+    </style>
+
+    <div class="hand">
+      <sortable-list>
+        <template is="dom-repeat" items='["a","k","q","b"]'>
+          <game-card style="cursor:pointer;" symbol="♠" rank="[[item]]" flippable></game-card>
+        </template>
+      </sortable-list>
+    </div>
+  </template>
+
+  <script>
+    class HandCards extends Polymer.Element {
+      static get is() { return 'hand-cards'; }
+    }
+
+    window.customElements.define(HandCards.is, HandCards);
+  </script>
+</dom-module>
