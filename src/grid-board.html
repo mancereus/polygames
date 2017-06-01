@@ -11,6 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/the-grid/the-grid.html">
 <link rel="import" href="../bower_components/game-card/game-card.html">
+<link rel="import" href="./game-card2.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="grid-board">
@@ -36,12 +37,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <the-grid draggable resizable animated col-count="7" row-count="7" cell-margin="5" cell-height="300" cell-width="200">
       <template is="dom-repeat" items='[[cards]]'>
-          <game-card symbol="[[item.symbol]]" rank="[[item.value]]" flippable  col="{{item.col}}" row="{{item.row}}"></game-card>
+          <game-card2 symbol="[[item.symbol]]" rank="[[item.value]]" flippable unrevealed="[[!item.open]]"  col="{{item.col}}" row="{{item.row}}"></game-card2>
         </div>
       </template>
-      <game-card symbol="♠" rank="k" flippable col="3" row="0"></game-card>
-      <game-card symbol="X" rank="a" flippable col="6" row="0"></game-card>
-      <game-card symbol="♠" rank="a" flippable col="0" row="2"></game-card>
       <div placeholder></div>
     </the-grid>
   </template>
@@ -55,8 +53,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             type: Array,
             value: () => {
               return [
-                { symbol: "X", value: "3", row: "3", col: "3" },
-                { symbol: "X", value: "2", row: "2", col: "2" }
+                { symbol: "♠", value: "3", row: "0", col: "0", open: true },
+                { symbol: "♠", value: "2", row: "0", col: "1" },
+                { symbol: "♠", value: "k", row: "0", col: "2" }
               ]
             }
           }

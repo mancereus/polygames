@@ -1,0 +1,42 @@
+<link rel="import" href="../bower_components/game-card/game-card.html">
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="game-card2">
+
+    <script>
+        class GameCard2 extends GameCard {
+
+            static get is() { return 'game-card2'; }
+
+            static get properties() {
+                return {
+                    row: {
+                        type: Number,
+                        value: 0,
+                        reflectToAttribute: true
+                    },
+                    col: {
+                        type: Number,
+                        value: 0,
+                        reflectToAttribute: true
+                    }
+                }
+            }
+
+            constructor() {
+                super();
+            }
+
+            ready() {
+                super.ready();
+
+                Polymer.RenderStatus.afterNextRender(this, function () {
+
+                });
+            }
+
+        }
+
+        window.customElements.define(GameCard2.is, GameCard2);
+    </script>
+</dom-module>
