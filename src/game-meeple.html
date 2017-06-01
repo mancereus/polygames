@@ -1,0 +1,50 @@
+<link rel="import" href="../bower_components/game-card/game-card.html">
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="game-meeple">
+    <template>
+                <style>
+             :host {
+                border: 12px solid blue;
+                border-radius: 50%;
+            }
+        </style>
+
+    </template>
+    <script>
+        class GameMeeple extends Polymer.Element {
+
+            static get is() { return 'game-meeple'; }
+
+            static get properties() {
+                return {
+                    row: {
+                        type: Number,
+                        value: 0,
+                        reflectToAttribute: true
+                    },
+                    col: {
+                        type: Number,
+                        value: 0,
+                        reflectToAttribute: true
+                    }
+                }
+            }
+
+            constructor() {
+                super();
+            }
+
+            ready() {
+                super.ready();
+
+                Polymer.RenderStatus.afterNextRender(this, function () {
+
+                });
+            }
+
+        }
+
+        window.customElements.define(GameMeeple.is, GameMeeple);
+    </script>
+</dom-module>

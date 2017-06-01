@@ -1,0 +1,65 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/the-grid/the-grid.html">
+<link rel="import" href="./game-meeple.html">
+
+<dom-module id="snake-game">
+    <template>
+        <style>
+             :host {
+                display: block
+            }
+
+            .point {
+                border: 4px solid blue;
+                border-radius: 50%;
+            }
+        </style>
+        <the-grid draggable animated row-count="7" col-count="7">
+            <game-meeple row="{{point.row}}" col="{{point.col}}"></game-meeple>
+            <div placeholder>text</div>
+        </the-grid>
+
+
+    </template>
+
+    <script>
+        class SnakeGame extends Polymer.Element {
+
+            static get is() { return 'snake-game'; }
+
+            static get properties() {
+                return {}
+            }
+
+            constructor() {
+                super();
+            }
+
+            ready() {
+                super.ready();
+                this.point = { row: 0, col: 0 }
+                Polymer.RenderStatus.afterNextRender(this, function () {
+
+                });
+            }
+            connectedCallback() {
+                super.connectedCallback();
+                const timer = window.setInterval(() => this.move(this.point), 1000)
+
+
+
+            }
+            move(point) {
+                point.col = (point.col +1) % 7
+                if (point.col === 0) {
+                    point.row = point.row + 1
+                    this.notifyPath('point.row');
+                }
+                this.notifyPath('point.col');
+            }
+
+        }
+
+        window.customElements.define(SnakeGame.is, SnakeGame)
+    </script>
+</dom-module>
