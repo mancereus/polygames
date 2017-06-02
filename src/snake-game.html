@@ -1,6 +1,7 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/the-grid/the-grid.html">
 <link rel="import" href="./game-meeple.html">
+<link rel="import" href="./snake-game-enigne.html">
 
 <dom-module id="snake-game">
     <template>
@@ -14,8 +15,9 @@
                 border-radius: 50%;
             }
         </style>
+        <snake-game-engine model ="{{model}}"></snake-game-engine>
         <the-grid draggable animated row-count="7" col-count="7">
-            <game-meeple row="{{point.row}}" col="{{point.col}}"></game-meeple>
+            <game-meeple row="{{model.point.row}}" col="{{model.point.col}}"></game-meeple>
             <div placeholder>text</div>
         </the-grid>
 
@@ -37,25 +39,12 @@
 
             ready() {
                 super.ready();
-                this.point = { row: 0, col: 0 }
                 Polymer.RenderStatus.afterNextRender(this, function () {
 
                 });
             }
             connectedCallback() {
                 super.connectedCallback();
-                const timer = window.setInterval(() => this.move(this.point), 1000)
-
-
-
-            }
-            move(point) {
-                point.col = (point.col +1) % 7
-                if (point.col === 0) {
-                    point.row = point.row + 1
-                    this.notifyPath('point.row');
-                }
-                this.notifyPath('point.col');
             }
 
         }

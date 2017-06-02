@@ -1,0 +1,65 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="snake-game-engine">
+    <template>
+        <style>
+            :host {
+                display: block
+            }
+        </style>
+
+
+
+    </template>
+
+    <script>
+        class SnakeGameEngine extends Polymer.Element {
+
+            static get is() { return 'snake-game-engine'; }
+
+            static get properties() {
+                return {
+                    model: {
+                        type: Object,
+                        notify: true,
+                        value: function() {return {point: {row: 0, col: 0}}}
+                    }
+                };
+            }
+
+            constructor() {
+                super();
+                this.model = {point: {row: 0, col: 0}}
+            }
+
+            ready() {
+                super.ready();
+
+                Polymer.RenderStatus.afterNextRender(this, function() {
+
+                });
+            }
+            connectedCallback() {
+                super.connectedCallback();
+
+                const timer = window.setInterval(() => this.move(this.model), 1000)
+
+
+
+            }
+            move(model) {
+                const point = model.point
+                console.log(point)
+                point.col = (point.col +1) % 7
+                if (point.col === 0) {
+                    point.row = point.row + 1
+                    this.notifyPath('model.point.row');
+                }
+                this.notifyPath('model.point.col');
+            }
+
+        }
+
+        window.customElements.define(SnakeGameEngine.is, SnakeGameEngine);
+    </script>
+</dom-module>
