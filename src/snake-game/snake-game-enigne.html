@@ -3,7 +3,7 @@
 <dom-module id="snake-game-engine">
     <template>
         <style>
-            :host {
+             :host {
                 display: block
             }
         </style>
@@ -22,40 +22,59 @@
                     model: {
                         type: Object,
                         notify: true,
-                        value: function() {return {point: {row: 0, col: 0}}}
+                        value: function () { return { point: { row: 0, col: 0 } } }
+                    },
+                    players: {
+                        type: Array,
+
                     }
                 };
             }
 
             constructor() {
                 super();
-                this.model = {point: {row: 0, col: 0}}
+                this.model = { point: { row: 0, col: 0 } }
+                this.players = [{color: 'blue', row: 0, col: 0},{color: 'red', row: 0, col: 0}]
             }
 
             ready() {
                 super.ready();
 
-                Polymer.RenderStatus.afterNextRender(this, function() {
+                Polymer.RenderStatus.afterNextRender(this, function () {
 
                 });
             }
-            connectedCallback() {
-                super.connectedCallback();
-
-                const timer = window.setInterval(() => this.move(this.model), 1000)
-
-
-
+            async connectedCallback() {
+                super.connectedCallback()
+                while (!this.model.won) {
+                    this.players.forEach(
+                        (player) => {
+                            this.action(this.model, player)
+                        })
+                    await this.sleep(500)
+                }
             }
-            move(model) {
+
+            sleep(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+            action(model) {
+                const diceroll = Math.ceil(Math.random() * 4)
+                console.log("rolled " + diceroll)
+                this.move(model, diceroll)
+            }
+            move(model, diceroll) {
                 const point = model.point
                 console.log(point)
-                point.col = (point.col +1) % 7
-                if (point.col === 0) {
+                point.col = point.col + diceroll
+                if (point.col > 6) {
+                    point.col = point.col % 7
                     point.row = point.row + 1
                     this.notifyPath('model.point.row');
                 }
                 this.notifyPath('model.point.col');
+                if (point.row > 6)
+                    model.won = true
             }
 
         }
