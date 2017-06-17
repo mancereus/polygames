@@ -2,10 +2,10 @@
   "entrypoint": "index.html",
   "shell": "src/my-app.html",
   "fragments": [
-    "src/grid-board.html",
-    "src/greenhell-game.html",
-    "src/hand-cards.html",
-    "src/my-view404.html"
+    "src/grid-board/grid-board.html",
+    "src/greenhell-game/greenhell-game.html",
+    "src/hand-cards/hand-cards.html",
+    "src/my-view404/my-view404.html"
   ],
   "sources": [
     "src/**/*",

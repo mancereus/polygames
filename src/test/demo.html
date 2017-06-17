@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+
+    <!-- Polymer -->
+    <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:900">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+    <link rel="import" href="../components/board-game-dice/board-game-dice.html">
+
+    <!-- custom styling for elements -->
+    <style is="custom-style">
+      board-game-dice {
+      	--board-game-dice: {
+          background-color: red;
+          width: 60px;
+          height: 60px;
+        };
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <paper-button>Test Button</paper-button>
+    <board-game-dice>YEAH!</board-game-dice>
+    <board-game-card>
+      <div><img src="img/front1.png"/></div>
+			<div><img src="img/back1.png"/></div>
+    </board-game-card>
+    <div style="width:80vw;height: 80vh;background-color: green;">
+      <div id="test" style="width: 20%; height: 50%; border: 2px solid blue;">testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest</div>
+    </div>
+    <script>
+      var msg = new SpeechSynthesisUtterance();
+msg.msg.voice = window.speechSynthesis.getVoices()[1]; // Note: some voices don't support altering params
+msg.voiceURI = 'native';
+msg.volume = 1; // 0 to 1
+msg.rate = 3; // 0.1 to 10
+msg.pitch = 4; //0 to 2
+msg.text = 'Hallo Welt';
+msg.lang = 'de-DE';
+
+msg.onend = function(e) {
+  console.log('Finished in ' + event.elapsedTime + ' seconds.');
+};
+
+speechSynthesis.speak(msg);
+    </script>
+  </body>
+
+</html>

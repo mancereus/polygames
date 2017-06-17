@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>polymer Local Dom</title>
+	<script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+	<link rel="import" href="imports.html">
+
+</head>
+
+<body>
+	<h2>minimal template with attribute</h2>
+	<dom-module id="x-minTmpl">
+
+		<template>
+			<script>
+				class XMinTmpl extends Polymer.Element {
+					static get is() { return 'x-minTmpl'; }
+					static get properties() {
+						return {
+							name: {
+								type: String,
+								value: "test xy!"
+							}
+						}
+					}
+				}
+
+				window.customElements.define(XMinTmpl.is, XMinTmpl);
+			</script>
+
+			I am {{name}}!
+		</template>
+
+	</dom-module>
+	<x-minTmpl></x-minTmpl>
+
+	<hr/>
+
+	<h2>local dom selector</h2>
+	<p>For locating dynamically-created nodes in your element’s local DOM, use the $$ method: this.$$(selector) $$ returns the
+		first node in the local DOM that matches selector.</p>
+	<x-selector></x-selector>
+
+	<dom-module id="x-selector">
+
+		<template>
+			<h4 id="name">Test</h4>
+			<h4 id="name2"></h4>
+		</template>
+
+		<script>
+					Polymer({
+						is: 'x-selector',
+						ready: function () {
+							this.$.name2.textContent = this.$$('h4').outerHTML;
+						}
+					});
+		</script>
+
+	</dom-module>
+
+	<hr/>
+
+	<h2>access local id and add content to template</h2>
+	<x-custom>
+		<span class="greet">Hello World</span>
+		<span class="name">Name</span>
+	</x-custom>
+
+	<dom-module id="x-custom">
+
+		<template>
+			<h4 id="name"></h4>
+			<h4 id="name2"></h4>
+			<slot name=".greet"></slot> from
+			<slot name=".name"></slot>!
+		</template>
+
+		<script>
+			Polymer({
+				is: 'x-custom',
+				ready: function () {
+					this.$.name.textContent = this.tagName;
+					this.$.name2.textContent = this.$$('h4').outerHTML;
+				}
+			});
+		</script>
+
+	</dom-module>
+
+
+</body>
+
+</html>

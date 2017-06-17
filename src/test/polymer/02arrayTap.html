@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>polymer array properties</title>
+    <script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="data2.js"></script>
+    <link rel="import" href="imports.html">
+        <link rel="import" href="../../components/board-game-dice/board-game-dice.html">
+        <link rel="import" href="../../components/board-game-container/board-game-container.html">
+        <link rel="import" href="../../hotdice/hotdice-container.html">
+
+
+</head>
+
+<body>
+    <h1>Array moving</h1>
+    <h2>move items between arrays</h2>
+    <template is="dom-bind">
+        <tst-data data="{{data}}"></tst-data>
+                    <board-game-container container="stack" data="{{data}}">
+                <board-game-dice></board-game-dice>
+            </board-game-container>
+            <hotdice-container container="player1" data="{{data}}">
+                </hotdice-container>
+            <board-game-container container="player2" data="{{data}}">
+                </board-game-container>
+            <board-game-container container="player3" data="{{data}}">
+                </board-game-container>
+
+    </template>
+    <style>
+        .container {
+            display: flex;
+            cursor: pointer;
+            justify-content: space-around;
+            align-content: space-between;
+            padding: 4px;
+            background-color: lightgray;
+        }
+        .item {
+            border: 1px solid blue;
+            background-color: white;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+
+        }
+    </style>
+    <dom-module id="tst-data">
+        <script>
+            Polymer({
+		is: 'tst-data',
+		properties: {
+			data: {
+				notify: true,
+				value: function() {
+					return cards;
+					}
+			}
+		}
+	});
+        </script>
+
+    </dom-module>
+
+
+    <hr/>
+
+
+
+</body>
+
+</html>
