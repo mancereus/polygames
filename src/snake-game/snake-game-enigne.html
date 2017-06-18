@@ -28,7 +28,11 @@
 
             constructor() {
                 super();
-                this.model = { games: {}, players: [{ color: 'blue', pos: 0 }, { color: 'red', pos: 0 }] }
+                this.model = { games: {},
+                    players: [
+                        { color: 'blue', pos: 0, row: 0, col: 0 },
+                        { color: 'red', pos: 0, row: 0, col: 0 }
+                    ] }
             }
 
             ready() {
@@ -40,17 +44,17 @@
             }
             async connectedCallback() {
                 super.connectedCallback()
-                for(let i = 0; i< 1000; i++) {
-                while (!this.model.won) {
-                    this.model.players.forEach(
-                        (player, index) => {
-                            this.action(this.model, index)
-                        })
-                    await this.sleep(500)
-                }
-                console.log(`${this.model.won} has won`)
-                this.model.games[this.model.won] = this.model.games[this.model.won] ? this.model.games[this.model.won] +1 : 1
-                this.reset()
+                for (let i = 0; i < 1000; i++) {
+                    while (!this.model.won) {
+                        await this.sleep(500)
+                        this.model.players.forEach(
+                            (player, index) => {
+                                this.action(this.model, index)
+                            })
+                    }
+                    console.log(`${this.model.won} has won`)
+                    this.model.games[this.model.won] = this.model.games[this.model.won] ? this.model.games[this.model.won] + 1 : 1
+                    this.reset()
                 }
                 console.log(`summary: ${JSON.stringify(this.model.games)}`)
 
@@ -72,7 +76,7 @@
                     return
                 }
                 this.model.won = undefined
-                this.model.players.forEach((player) => {player.pos = 0})
+                this.model.players.forEach((player) => { player.pos = 0,player.col = 0,player.row = 0 })
             }
             move(model, index, diceroll) {
                 const point = model.players[index]
