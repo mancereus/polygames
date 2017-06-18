@@ -28,7 +28,7 @@
 
             constructor() {
                 super();
-                this.model = { players: [{color: 'blue', row: 0, col: 0},{color: 'red', row: 0, col: 0}] }
+                this.model = { games: {}, players: [{ color: 'blue', pos: 0 }, { color: 'red', pos: 0 }] }
             }
 
             ready() {
@@ -40,6 +40,7 @@
             }
             async connectedCallback() {
                 super.connectedCallback()
+                for(let i = 0; i< 1000; i++) {
                 while (!this.model.won) {
                     this.model.players.forEach(
                         (player, index) => {
@@ -47,6 +48,12 @@
                         })
                     await this.sleep(500)
                 }
+                console.log(`${this.model.won} has won`)
+                this.model.games[this.model.won] = this.model.games[this.model.won] ? this.model.games[this.model.won] +1 : 1
+                this.reset()
+                }
+                console.log(`summary: ${JSON.stringify(this.model.games)}`)
+
             }
 
             sleep(ms) {
@@ -54,21 +61,36 @@
             }
             action(model, index) {
                 const diceroll = Math.ceil(Math.random() * 4)
-                console.log("rolled " + diceroll)
                 this.move(model, index, diceroll)
+            }
+            reset(player) {
+                if (player) {
+                    player.pos = 0
+                    player.col = 0
+                    player.row = 0
+                    console.log("reset player " + JSON.stringify(player))
+                    return
+                }
+                this.model.won = undefined
+                this.model.players.forEach((player) => {player.pos = 0})
             }
             move(model, index, diceroll) {
                 const point = model.players[index]
-                console.log(point)
-                point.col = point.col + diceroll
-                if (point.col > 6) {
-                    point.col = point.col % 7
-                    point.row = point.row + 1
-                    this.notifyPath(`model.players.${index}.row`);
-                }
-                this.notifyPath(`model.players.${index}.col`);
-                if (point.row > 6)
-                    model.won = true
+                point.pos = point.pos + diceroll
+                point.col = point.pos % 7
+                this.notifyPath(`model.players.${index}.col`)
+                point.row = Math.floor((point.pos) / 7)
+                this.notifyPath(`model.players.${index}.row`)
+                this.model.players.forEach((player, idx) => {
+                    if (idx === index)
+                        return
+                    if (player.pos === point.pos)
+                        this.reset(player)
+                })
+                // if (index === 0)
+                //     console.log(`${point.color}:${point.pos} = ${point.row},${point.col} + ${diceroll}`)
+                if (point.pos > 49)
+                    model.won = point.color
             }
 
         }
