@@ -22,19 +22,13 @@
                     model: {
                         type: Object,
                         notify: true,
-                        value: function () { return { point: { row: 0, col: 0 } } }
-                    },
-                    players: {
-                        type: Array,
-
                     }
                 };
             }
 
             constructor() {
                 super();
-                this.model = { point: { row: 0, col: 0 } }
-                this.players = [{color: 'blue', row: 0, col: 0},{color: 'red', row: 0, col: 0}]
+                this.model = { players: [{color: 'blue', row: 0, col: 0},{color: 'red', row: 0, col: 0}] }
             }
 
             ready() {
@@ -47,9 +41,9 @@
             async connectedCallback() {
                 super.connectedCallback()
                 while (!this.model.won) {
-                    this.players.forEach(
-                        (player) => {
-                            this.action(this.model, player)
+                    this.model.players.forEach(
+                        (player, index) => {
+                            this.action(this.model, index)
                         })
                     await this.sleep(500)
                 }
@@ -58,21 +52,21 @@
             sleep(ms) {
                 return new Promise(resolve => setTimeout(resolve, ms));
             }
-            action(model) {
+            action(model, index) {
                 const diceroll = Math.ceil(Math.random() * 4)
                 console.log("rolled " + diceroll)
-                this.move(model, diceroll)
+                this.move(model, index, diceroll)
             }
-            move(model, diceroll) {
-                const point = model.point
+            move(model, index, diceroll) {
+                const point = model.players[index]
                 console.log(point)
                 point.col = point.col + diceroll
                 if (point.col > 6) {
                     point.col = point.col % 7
                     point.row = point.row + 1
-                    this.notifyPath('model.point.row');
+                    this.notifyPath(`model.players.${index}.row`);
                 }
-                this.notifyPath('model.point.col');
+                this.notifyPath(`model.players.${index}.col`);
                 if (point.row > 6)
                     model.won = true
             }

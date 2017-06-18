@@ -3,13 +3,14 @@
 
 <dom-module id="game-meeple">
     <template>
-                <style>
+		<custom-style>
+        <style is="custom-style">
              :host {
-                border: 12px solid blue;
+                border: 12px solid var(--color, red);
                 border-radius: 50%;
             }
         </style>
-
+		</custom-style>
     </template>
     <script>
         class GameMeeple extends Polymer.Element {
@@ -18,7 +19,7 @@
 
             static get properties() {
                 return {
-                    
+
                     row: {
                         type: Number,
                         value: 0,
@@ -43,6 +44,11 @@
 
                 });
             }
+            connectedCallback() {
+                super.connectedCallback();
+                this.updateStyles({'--color': this.color || 'red'});
+            }
+
 
         }
 

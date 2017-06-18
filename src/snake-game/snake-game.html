@@ -17,7 +17,10 @@
         </style>
         <snake-game-engine model ="{{model}}"></snake-game-engine>
         <the-grid draggable animated row-count="7" col-count="7">
-            <game-meeple row="{{model.point.row}}" col="{{model.point.col}}"></game-meeple>
+            <template is="dom-repeat"  items='[[model.players]]'>
+                <game-meeple row="{{item.row}}" col="{{item.col}}" color="[[item.color]]"></game-meeple>
+
+            </template>
             <div placeholder>text</div>
         </the-grid>
 
